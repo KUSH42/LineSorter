@@ -15,12 +15,8 @@ import java.util.logging.Logger;
 
 public class SortLogic {
 
-	private static final Logger LOGGER = initLogger();
-
-	private static Logger initLogger() {
-		return Logger.getLogger(MainView.class.getName());
-	}
-
+	private static final Logger LOGGER = Logger.getLogger(SortLogic.class.getName());
+	
 	private SortLogic() {
 	}
 
