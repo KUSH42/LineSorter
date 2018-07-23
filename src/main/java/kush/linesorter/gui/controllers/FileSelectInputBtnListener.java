@@ -22,13 +22,12 @@ public class FileSelectInputBtnListener implements EventHandler<ActionEvent> {
 		if (selectedFiles != null && !selectedFiles.isEmpty()) {
 			parent.setInputFiles(selectedFiles);
 			StringBuilder filepaths = new StringBuilder();
-			int i = 0;
+			int i = selectedFiles.size();
 			for (File file : selectedFiles) {
 				filepaths.append(file.getName());
-				if (i < 0) {
-					filepaths.append(";");
+				if (--i > 0) {
+					filepaths.append("; ");
 				}
-				i++;
 			}
 			parent.getInputFilePathLabel().setText(filepaths.toString());
 		}
