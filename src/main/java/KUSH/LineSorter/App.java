@@ -1,4 +1,4 @@
-package KUSH.LineSorter;
+package kush.linesorter;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
-import KUSH.LineSorter.gui.MainView;
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
@@ -18,7 +17,7 @@ import javafx.stage.Stage;
 
 public class App extends Application {
 	
-	private final static Logger LOGGER = initLogger();
+	private static final Logger LOGGER = initLogger();
 	
 	public static void main(String[] args) {
         launch(args);
@@ -48,7 +47,6 @@ public class App extends Application {
     }
     
     private static Logger initLogger() {
-    	Logger logger = Logger.getLogger(MainView.class.getName());
-    	return logger;
+    	return Logger.getLogger(MainView.class.getName());
     }
 }

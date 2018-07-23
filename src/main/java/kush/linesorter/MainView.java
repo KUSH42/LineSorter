@@ -1,11 +1,10 @@
-package KUSH.LineSorter.gui;
+package kush.linesorter;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
-import KUSH.LineSorter.SortLogic;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -28,7 +27,7 @@ import javafx.stage.Stage;
 
 public class MainView extends GridPane {
 
-	private final static Logger LOGGER = initLogger();
+	private static final Logger LOGGER = initLogger();
 
 	Button startBtn;
 	Button fileInputSelectBtn;
@@ -43,14 +42,15 @@ public class MainView extends GridPane {
 	List<File> inputFiles;
 	File outputFile;
 
+	private static final String MORE_THAN_ONE_OUTPUT_FILE_WAS_SELECTED_FOR_THE_SORT_OPERATION = "More than one output file was selected for the sort operation.";
+
 	public MainView() {
 		super();
 		initComponents();
 	}
 
 	private static Logger initLogger() {
-		Logger logger = Logger.getLogger(MainView.class.getName());
-		return logger;
+		return Logger.getLogger(MainView.class.getName());
 	}
 
 	private void initComponents() {
@@ -68,7 +68,7 @@ public class MainView extends GridPane {
 		fileInputSelectBtn = new Button();
 		fileInputSelectBtn.setText("...");
 		fileInputSelectBtn.setOnAction(new FileSelectBtnListener(fileInput, IOEnum.INPUT));
-		
+
 		outputFilePathLabel = new TextField("Select output file...");
 		outputFilePathLabel.setEditable(false);
 		outputFilePathLabel.setOnDragOver(new DragOverListener(IOEnum.OUTPUT));
@@ -86,134 +86,147 @@ public class MainView extends GridPane {
 		startBtn.setOnAction(new StartBtnListener());
 		startBtn.setPrefWidth(REMAINING);
 		add(startBtn, 0, 1);
-		
+
 		VBox btnVbox = new VBox(10);
 		btnVbox.getChildren().addAll(fileInputSelectBtn, fileOutputSelectBtn);
-		
+
 		VBox fileVbox = new VBox(10);
 		VBox.setVgrow(inputFilePathLabel, Priority.ALWAYS);
 		VBox.setVgrow(outputFilePathLabel, Priority.ALWAYS);
 		fileVbox.getChildren().addAll(inputFilePathLabel, outputFilePathLabel);
-		
+
 		BorderPane borderpane = new BorderPane();
 		BorderPane.setMargin(btnVbox, new Insets(0, 0, 0, 10));
 		borderpane.setCenter(fileVbox);
 		borderpane.setRight(btnVbox);
 		add(borderpane, 0, 0);
-		
+
 		autosize();
 	}
 
 	private class DragOverListener implements EventHandler<DragEvent> {
 
-		IOEnum MODE;
+		private final IOEnum mode;
 
-		public DragOverListener(IOEnum MODE) {
-			this.MODE = MODE;
+		public DragOverListener(IOEnum mode) {
+			this.mode = mode;
 		}
 
 		@Override
 		public void handle(DragEvent event) {
-			if (MODE == IOEnum.INPUT) {
-				if (event.getGestureSource() != inputFilePathLabel && event.getDragboard().hasFiles()) {
-					Dragboard db = event.getDragboard();
-					List<File> files = db.getFiles();
-					boolean dragDropFlag = true;
-					for (File file : files) {
-						if (file != null) {
-							String filename = file.getName();
-							int i = filename.lastIndexOf('.');
-							String ext = i > 0 ? filename.substring(i + 1) : "";
-							if (!"txt".equals(ext)) {
-								dragDropFlag = false;
-								break;
-							}
-						}
-					}
-					if (dragDropFlag) {
-						event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-					}
-				}
+			if (mode == IOEnum.INPUT
+					|| event.getGestureSource() != inputFilePathLabel && event.getDragboard().hasFiles()) {
+				handleInput(event);
 			}
-			if (MODE == IOEnum.OUTPUT) {
-				if (event.getGestureSource() != outputFilePathLabel && event.getDragboard().hasFiles()) {
-					Dragboard db = event.getDragboard();
-					List<File> files = db.getFiles();
-					boolean dragDropFlag = true;
-					if (files.size() > 1) {
-						LOGGER.info("More than one output file was selected for the sort operation.");
-						Alert alert = new Alert(AlertType.WARNING,
-								"More than one output file was selected for the sort operation.", ButtonType.OK);
-						alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-						alert.show();
-						return;
-					}
-					for (File file : files) {
-						if (file != null) {
-							String filename = file.getName();
-							int i = filename.lastIndexOf('.');
-							String ext = i > 0 ? filename.substring(i + 1) : "";
-							if (!"txt".equals(ext)) {
-								dragDropFlag = false;
-								break;
-							}
-						}
-					}
-					if (dragDropFlag && files != null && files.size() != 0) {
-						event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-						outputFile = files.get(0);
-					}
-				}
+			if (mode == IOEnum.OUTPUT
+					&& (event.getGestureSource() != outputFilePathLabel && event.getDragboard().hasFiles())) {
+				handleOutput(event);
 			}
 			event.consume();
+		}
+
+		public void handleInput(DragEvent event) {
+			Dragboard db = event.getDragboard();
+			List<File> files = db.getFiles();
+			boolean dragDropFlag = true;
+			for (File file : files) {
+				if (file != null) {
+					String filename = file.getName();
+					int i = filename.lastIndexOf('.');
+					String ext = i > 0 ? filename.substring(i + 1) : "";
+					if (!"txt".equals(ext)) {
+						dragDropFlag = false;
+						break;
+					}
+				}
+			}
+			if (dragDropFlag) {
+				event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+			}
+		}
+
+		public void handleOutput(DragEvent event) {
+			Dragboard db = event.getDragboard();
+			List<File> files = db.getFiles();
+			boolean dragDropFlag = true;
+			if (files.size() > 1) {
+				LOGGER.info(MainView.MORE_THAN_ONE_OUTPUT_FILE_WAS_SELECTED_FOR_THE_SORT_OPERATION);
+				Alert alert = new Alert(AlertType.WARNING,
+						MainView.MORE_THAN_ONE_OUTPUT_FILE_WAS_SELECTED_FOR_THE_SORT_OPERATION, ButtonType.OK);
+				alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+				alert.show();
+				return;
+			}
+			for (File file : files) {
+				if (file != null) {
+					String filename = file.getName();
+					int i = filename.lastIndexOf('.');
+					String ext = i > 0 ? filename.substring(i + 1) : "";
+					if (!"txt".equals(ext)) {
+						dragDropFlag = false;
+						break;
+					}
+				}
+			}
+			if (dragDropFlag && !files.isEmpty()) {
+				event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+				outputFile = files.get(0);
+			}
 		}
 	}
 
 	private class DragDroppedListener implements EventHandler<DragEvent> {
 
-		IOEnum MODE;
+		private final IOEnum mode;
 
-		public DragDroppedListener(IOEnum MODE) {
-			this.MODE = MODE;
+		public DragDroppedListener(final IOEnum mode) {
+			this.mode = mode;
 		}
 
 		@Override
 		public void handle(DragEvent event) {
-			if (MODE == IOEnum.INPUT) {
-				Dragboard db = event.getDragboard();
-				List<File> selectedFiles = db.getFiles();
-				if (selectedFiles != null && selectedFiles.size() != 0) {
-					inputFiles = selectedFiles;
-					String filepaths = "";
-					int i = 0;
-					for (File file : selectedFiles) {
-						filepaths += file.getName();
-						i++;
-						if (i != selectedFiles.size()) {
-							filepaths += "; ";
-						}
-					}
-					inputFilePathLabel.setText(filepaths);
-				}
-
+			if (mode == IOEnum.INPUT) {
+				handleInput(event);
 			}
-			if (MODE == IOEnum.OUTPUT) {
-				Dragboard db = event.getDragboard();
-				List<File> selectedFiles = db.getFiles();
-				if (selectedFiles.size() > 1) {
-					LOGGER.info("More than one output file was selected for the sort operation.");
-					Alert alert = new Alert(AlertType.WARNING,
-							"More than one output file was selected for the sort operation.", ButtonType.OK);
-					alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-					alert.show();
-					return;
-				}
-				if (selectedFiles != null && selectedFiles.size() != 0) {
-					outputFile = selectedFiles.get(0);
-					outputFilePathLabel.setText(outputFile.getName());
-				}
+			if (mode == IOEnum.OUTPUT) {
+				handleOutput(event);
 			}
 			event.consume();
+		}
+
+		private void handleInput(DragEvent event) {
+			Dragboard db = event.getDragboard();
+			List<File> selectedFiles = db.getFiles();
+			if (selectedFiles != null && !selectedFiles.isEmpty()) {
+				inputFiles = selectedFiles;
+				StringBuilder filepaths = new StringBuilder();
+				int i = 0;
+				for (File file : selectedFiles) {
+					filepaths.append(file.getName());
+					i++;
+					if (i != selectedFiles.size()) {
+						filepaths.append("; ");
+					}
+				}
+				inputFilePathLabel.setText(filepaths.toString());
+			}
+		}
+
+		private void handleOutput(DragEvent event) {
+			Dragboard db = event.getDragboard();
+			List<File> selectedFiles = db.getFiles();
+			if (selectedFiles.size() > 1) {
+				LOGGER.info(MORE_THAN_ONE_OUTPUT_FILE_WAS_SELECTED_FOR_THE_SORT_OPERATION);
+				Alert alert = new Alert(AlertType.WARNING,
+						MORE_THAN_ONE_OUTPUT_FILE_WAS_SELECTED_FOR_THE_SORT_OPERATION, ButtonType.OK);
+				alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+				alert.show();
+				return;
+			}
+			if (!selectedFiles.isEmpty()) {
+				outputFile = selectedFiles.get(0);
+				outputFilePathLabel.setText(outputFile.getName());
+			}
 		}
 	}
 
@@ -253,32 +266,32 @@ public class MainView extends GridPane {
 					ButtonType.OK);
 			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 			alert.show();
-			return;
 		}
 	}
 
 	private class FileSelectBtnListener implements EventHandler<ActionEvent> {
 
-		private FileChooser input;
-		private IOEnum MODE;
+		private final FileChooser input;
+		private final IOEnum mode;
 
-		FileSelectBtnListener(FileChooser input, IOEnum MODE) {
+		FileSelectBtnListener(final FileChooser input, final IOEnum mode) {
 			this.input = input;
-			this.MODE = MODE;
+			this.mode = mode;
 		}
 
 		public void handle(ActionEvent event) {
-			if (MODE == IOEnum.INPUT) {
+			if (mode == IOEnum.INPUT) {
 				List<File> selectedFiles = input.showOpenMultipleDialog((Stage) getScene().getWindow());
-				if (selectedFiles != null && selectedFiles.size() != 0) {
+				if (selectedFiles != null && selectedFiles.isEmpty()) {
 					inputFiles = selectedFiles;
-					String filepaths = "";
+					StringBuilder filepaths = new StringBuilder();
 					for (File file : selectedFiles) {
-						filepaths += file.getName() + ";";
+						filepaths.append(file.getName());
+						filepaths.append(";");
 					}
-					inputFilePathLabel.setText(filepaths);
+					inputFilePathLabel.setText(filepaths.toString());
 				}
-			} else if (MODE == IOEnum.OUTPUT) {
+			} else if (mode == IOEnum.OUTPUT) {
 				File selectedFile = input.showSaveDialog((Stage) getScene().getWindow());
 				if (selectedFile != null && selectedFile.length() != 0) {
 					outputFile = selectedFile;

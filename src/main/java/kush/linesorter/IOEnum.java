@@ -1,4 +1,4 @@
-package KUSH.LineSorter.gui;
+package kush.linesorter;
 
 public enum IOEnum {
 	INPUT,
