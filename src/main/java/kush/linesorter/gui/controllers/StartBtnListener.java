@@ -65,5 +65,6 @@ public class StartBtnListener implements EventHandler<ActionEvent> {
 				parent.getOutputFile().getAbsolutePath(), (System.currentTimeMillis() - start), ButtonType.OK));
 		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 		alert.show();
+		event.consume();
 	}
 }

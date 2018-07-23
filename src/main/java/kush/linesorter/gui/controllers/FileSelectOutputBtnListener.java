@@ -22,5 +22,6 @@ public class FileSelectOutputBtnListener implements EventHandler<ActionEvent> {
 			parent.setOutputFile(selectedFile);
 			parent.getOutputFilePathLabel().setText(selectedFile.getAbsolutePath());
 		}
+		event.consume();
 	}
 }
