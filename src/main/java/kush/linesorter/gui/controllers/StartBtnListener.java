@@ -1,8 +1,6 @@
 package kush.linesorter.gui.controllers;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
@@ -36,7 +34,7 @@ public class StartBtnListener implements EventHandler<ActionEvent> {
 
 	private final MainView parent;
 
-	public StartBtnListener(MainView parent) throws URISyntaxException {
+	public StartBtnListener(MainView parent) {
 		this.parent = parent;
 
 		SUCCESS_SOUND_PLAYER.setVolume(.15);

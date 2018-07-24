@@ -17,7 +17,7 @@ public class FileSelectOutputBtnListener implements EventHandler<ActionEvent> {
 
 	@Override
 	public void handle(ActionEvent event) {
-		File selectedFile = parent.getFileOutput().showSaveDialog((Stage) parent.getScene().getWindow());
+		File selectedFile = parent.getFileOutput().showSaveDialog((Stage) parent.getGridPane().getScene().getWindow());
 		if (selectedFile != null && selectedFile.length() != 0) {
 			parent.setOutputFile(selectedFile);
 			parent.getOutputFilePathLabel().setText(selectedFile.getAbsolutePath());

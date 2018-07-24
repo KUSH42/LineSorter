@@ -36,7 +36,7 @@ public class App extends Application {
 		MainView root = new MainView();
 		loadTitleIcon(primaryStage);
         primaryStage.setTitle("Line Sorter");
-        primaryStage.setScene(new Scene(root, 240, 115));
+        primaryStage.setScene(new Scene(root.getGridPane(), 240, 115));
         primaryStage.setResizable(false);
         primaryStage.sizeToScene();
         primaryStage.show();
