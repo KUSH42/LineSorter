@@ -5,12 +5,11 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import kush.linesorter.App;
@@ -36,8 +35,8 @@ public class MainView {
 	
 	private GridPane gridPane;
 	
-	private TextField inputFilePathLabel;
-	private TextField outputFilePathLabel;
+	private TextArea inputFilePathLabel;
+	private TextArea outputFilePathLabel;
 
 	private List<File> inputFiles;
 	private File outputFile;
@@ -56,22 +55,26 @@ public class MainView {
 		gridPane.setVgap(10);
 		gridPane.setPadding(new Insets(10, 10, 10, 10));
 
-		inputFilePathLabel = new TextField(SELECT_INPUT_FILES);
+		inputFilePathLabel = new TextArea(SELECT_INPUT_FILES);
 		inputFilePathLabel.setEditable(false);
 		inputFilePathLabel.setOnDragOver(new DragOverInputListener());
 		inputFilePathLabel.setOnDragDropped(new DragDroppedInputListener(this));
-		inputFilePathLabel.setMaxWidth(Integer.MAX_VALUE);
+		inputFilePathLabel.setMinSize(TextArea.USE_COMPUTED_SIZE, TextArea.USE_COMPUTED_SIZE);
+		inputFilePathLabel.setPrefSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
+
 		fileInput = new FileChooser();
 		fileInput.getExtensionFilters().add(new ExtensionFilter(TEXT_FILES, "*.txt"));
 		Button fileInputSelectBtn = new Button();
 		fileInputSelectBtn.setText("...");
 		fileInputSelectBtn.setOnAction(new FileSelectInputBtnListener(this));
 
-		outputFilePathLabel = new TextField(SELECT_OUTPUT_FILE);
+		outputFilePathLabel = new TextArea(SELECT_OUTPUT_FILE);
 		outputFilePathLabel.setEditable(false);
 		outputFilePathLabel.setOnDragOver(new DragOverOutputListener(this));
 		outputFilePathLabel.setOnDragDropped(new DragDroppedOutputListener(this));
-		outputFilePathLabel.setMaxWidth(Integer.MAX_VALUE);
+		inputFilePathLabel.setMinSize(TextArea.USE_COMPUTED_SIZE, TextArea.USE_COMPUTED_SIZE);
+		outputFilePathLabel.setPrefSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
+		
 		fileOutput = new FileChooser();
 		fileOutput.getExtensionFilters().addAll(new ExtensionFilter(TEXT_FILES, "*.txt"),
 				new ExtensionFilter(ALL_FILES, "*.*"));
@@ -83,23 +86,16 @@ public class MainView {
 		startBtn.setText(SORT);
 		startBtn.setOnAction(new StartBtnListener(this));
 		startBtn.setPrefWidth(Integer.MAX_VALUE);
-		gridPane.add(startBtn, 0, 1);
+		startBtn.setMinHeight(Button.USE_PREF_SIZE);
+		
+		HBox inputBox = new HBox(10);
+		inputBox.getChildren().addAll(inputFilePathLabel, fileInputSelectBtn);
+		inputBox.setAlignment(Pos.BOTTOM_CENTER);
+		HBox outputBox = new HBox(10);
+		outputBox.getChildren().addAll(outputFilePathLabel, fileOutputSelectBtn);
+		outputBox.setAlignment(Pos.BOTTOM_RIGHT);
 
-		VBox btnVbox = new VBox(10);
-		btnVbox.getChildren().addAll(fileInputSelectBtn, fileOutputSelectBtn);
-
-		VBox fileVbox = new VBox(10);
-		VBox.setVgrow(inputFilePathLabel, Priority.ALWAYS);
-		VBox.setVgrow(outputFilePathLabel, Priority.ALWAYS);
-		fileVbox.getChildren().addAll(inputFilePathLabel, outputFilePathLabel);
-
-		BorderPane borderpane = new BorderPane();
-		BorderPane.setMargin(btnVbox, new Insets(0, 0, 0, 10));
-		borderpane.setCenter(fileVbox);
-		borderpane.setRight(btnVbox);
-		gridPane.add(borderpane, 0, 0);
-
-		gridPane.autosize();
+		gridPane.addColumn(0, inputBox, outputBox, startBtn);
 	}
 
 	public List<File> getInputFiles() {
@@ -110,11 +106,11 @@ public class MainView {
 		this.inputFiles = inputFiles;
 	}
 
-	public TextField getInputFilePathLabel() {
+	public TextArea getInputFilePathLabel() {
 		return inputFilePathLabel;
 	}
 
-	public TextField getOutputFilePathLabel() {
+	public TextArea getOutputFilePathLabel() {
 		return outputFilePathLabel;
 	}
 
