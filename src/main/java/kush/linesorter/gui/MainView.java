@@ -4,12 +4,10 @@ import java.io.File;
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.sun.javafx.scene.control.skin.PaginationSkin;
-import com.sun.prism.impl.paint.PaintUtil;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -67,7 +65,7 @@ public class MainView {
 		inputFilePathLabel.setOnDragOver(new DragOverInputListener());
 		inputFilePathLabel.setOnDragDropped(new DragDroppedInputListener(this));
 		inputFilePathLabel.setMinSize(TextArea.USE_COMPUTED_SIZE, TextArea.USE_COMPUTED_SIZE);
-		inputFilePathLabel.setPrefSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
+		inputFilePathLabel.setPrefSize(Integer.MAX_VALUE, Control.USE_COMPUTED_SIZE);
 
 		fileInput = new FileChooser();
 		fileInput.getExtensionFilters().add(new ExtensionFilter(TEXT_FILES, "*.txt"));
@@ -81,8 +79,8 @@ public class MainView {
 		outputFilePathLabel.setOnDragOver(new DragOverOutputListener(this));
 		outputFilePathLabel.setOnDragDropped(new DragDroppedOutputListener(this));
 		outputFilePathLabel.setMinSize(TextArea.USE_COMPUTED_SIZE, TextArea.USE_COMPUTED_SIZE);
-		outputFilePathLabel.setPrefSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
-	
+		outputFilePathLabel.setPrefSize(Integer.MAX_VALUE, Control.USE_COMPUTED_SIZE);
+		
 		fileOutput = new FileChooser();
 		fileOutput.getExtensionFilters().addAll(new ExtensionFilter(TEXT_FILES, "*.txt"),
 				new ExtensionFilter(ALL_FILES, "*.*"));

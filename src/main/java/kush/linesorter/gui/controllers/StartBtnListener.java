@@ -9,7 +9,6 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
-import javafx.scene.layout.Region;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import kush.linesorter.App;
@@ -46,14 +45,12 @@ public class StartBtnListener implements EventHandler<ActionEvent> {
 		if (parent.getInputFiles() == null || parent.getInputFiles().isEmpty()) {
 			LOGGER.info(NO_INPUT_FILE_SELECTED);
 			Alert alert = new Alert(AlertType.WARNING, PLEASE_SELECT_INPUT, ButtonType.OK);
-			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 			alert.show();
 			return;
 		}
 		if (parent.getOutputFile() == null) {
 			LOGGER.info(NO_OUTPUT_FILE_SELECTED);
 			Alert alert = new Alert(AlertType.WARNING, PLEASE_SELECT_OUTPUT, ButtonType.OK);
-			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 			alert.show();
 			return;
 		}
@@ -64,13 +61,11 @@ public class StartBtnListener implements EventHandler<ActionEvent> {
 			LOGGER.severe(IOEXCEPTION_SORT);
 			LOGGER.severe(Arrays.toString(e.getStackTrace()));
 			Alert alert = new Alert(AlertType.ERROR, IOEXCEPTION_SORT, ButtonType.OK);
-			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 			alert.show();
 			return;
 		}
 		Alert alert = new Alert(AlertType.INFORMATION, String.format(SORT_SUCCESS_TIME,
 				parent.getOutputFile().getAbsolutePath(), (System.currentTimeMillis() - start), ButtonType.OK));
-		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 		SUCCESS_SOUND_PLAYER.stop();
 		SUCCESS_SOUND_PLAYER.play();
 		alert.show();

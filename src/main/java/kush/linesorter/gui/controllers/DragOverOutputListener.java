@@ -11,7 +11,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.Region;
 import kush.linesorter.App;
 import kush.linesorter.gui.MainView;
 
@@ -35,7 +34,6 @@ public class DragOverOutputListener implements EventHandler<DragEvent> {
 		if (files.size() > 1) {
 			LOGGER.info(TOO_MANY_OUTPUT_FILES_SELECTED);
 			Alert alert = new Alert(AlertType.WARNING, TOO_MANY_OUTPUT_FILES_SELECTED, ButtonType.OK);
-			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 			alert.show();
 			return;
 		}

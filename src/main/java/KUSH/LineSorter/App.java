@@ -14,7 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
-import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import kush.linesorter.gui.MainView;
 
@@ -50,7 +49,6 @@ public class App extends Application {
 		} catch (IOException e) {
 			LOGGER.severe(IMAGE_NOT_FOUND + e);
 			Alert alert = new Alert(AlertType.ERROR, IMAGE_NOT_FOUND, ButtonType.OK);
-			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 			alert.show();
 		}
     }
