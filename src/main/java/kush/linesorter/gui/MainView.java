@@ -51,9 +51,9 @@ public class MainView {
 
 	private void initComponents() {
 		gridPane = new GridPane();
-		gridPane.setHgap(10);
-		gridPane.setVgap(10);
-		gridPane.setPadding(new Insets(10, 10, 10, 10));
+		gridPane.setHgap(2);
+		gridPane.setVgap(2);
+		gridPane.setPadding(new Insets(3, 3, 3, 3));
 
 		inputFilePathLabel = new TextArea(SELECT_INPUT_FILES);
 		inputFilePathLabel.setEditable(false);
@@ -66,13 +66,14 @@ public class MainView {
 		fileInput.getExtensionFilters().add(new ExtensionFilter(TEXT_FILES, "*.txt"));
 		Button fileInputSelectBtn = new Button();
 		fileInputSelectBtn.setText("...");
+		fileInputSelectBtn.setPrefHeight(Integer.MAX_VALUE);
 		fileInputSelectBtn.setOnAction(new FileSelectInputBtnListener(this));
 
 		outputFilePathLabel = new TextArea(SELECT_OUTPUT_FILE);
 		outputFilePathLabel.setEditable(false);
 		outputFilePathLabel.setOnDragOver(new DragOverOutputListener(this));
 		outputFilePathLabel.setOnDragDropped(new DragDroppedOutputListener(this));
-		inputFilePathLabel.setMinSize(TextArea.USE_COMPUTED_SIZE, TextArea.USE_COMPUTED_SIZE);
+		outputFilePathLabel.setMinSize(TextArea.USE_COMPUTED_SIZE, TextArea.USE_COMPUTED_SIZE);
 		outputFilePathLabel.setPrefSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
 		
 		fileOutput = new FileChooser();
@@ -80,6 +81,7 @@ public class MainView {
 				new ExtensionFilter(ALL_FILES, "*.*"));
 		Button fileOutputSelectBtn = new Button();
 		fileOutputSelectBtn.setText("...");
+		fileOutputSelectBtn.setPrefHeight(Integer.MAX_VALUE);
 		fileOutputSelectBtn.setOnAction(new FileSelectOutputBtnListener(this));
 
 		Button startBtn = new Button();
@@ -88,10 +90,10 @@ public class MainView {
 		startBtn.setPrefWidth(Integer.MAX_VALUE);
 		startBtn.setMinHeight(Button.USE_PREF_SIZE);
 		
-		HBox inputBox = new HBox(10);
+		HBox inputBox = new HBox(2);
 		inputBox.getChildren().addAll(inputFilePathLabel, fileInputSelectBtn);
 		inputBox.setAlignment(Pos.BOTTOM_CENTER);
-		HBox outputBox = new HBox(10);
+		HBox outputBox = new HBox(2);
 		outputBox.getChildren().addAll(outputFilePathLabel, fileOutputSelectBtn);
 		outputBox.setAlignment(Pos.BOTTOM_RIGHT);
 

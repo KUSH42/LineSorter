@@ -36,10 +36,10 @@ public class App extends Application {
 		MainView root = new MainView();
 		loadTitleIcon(primaryStage);
         primaryStage.setTitle("Line Sorter");
-        Scene scene = new Scene(root.getGridPane(), 250, 120);
+        Scene scene = new Scene(root.getGridPane(), 280, 120);
         primaryStage.setScene(scene);
         primaryStage.show();
-        primaryStage.setMinHeight(primaryStage.getHeight() + 15);
+        primaryStage.setMinHeight(primaryStage.getHeight() + root.getGridPane().getVgap() * root.getGridPane().getChildren().size() - 1);
         primaryStage.setMinWidth(primaryStage.getWidth());
     }
     
