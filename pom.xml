@@ -5,7 +5,7 @@
 
 	<groupId>kush</groupId>
 	<artifactId>linesorter</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1</version>
 	<packaging>jar</packaging>
 
 	<name>LineSorter</name>
@@ -41,6 +41,7 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>3.1.0</version>
 				<configuration>
+					<finalName>${project.name}-v${project.version}</finalName>
 					<archive>
 						<manifest>
 							<mainClass>kush.linesorter.App</mainClass>
