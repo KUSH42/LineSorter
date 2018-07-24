@@ -44,9 +44,8 @@ public class SortLogic {
 			int i = strList.size();
 			for (String str : strList) {
 				writer.write(str);
-				i--;
-				if ((i <= 0)) {
-					writer.append('\n');
+				if (--i > 0) {
+					writer.newLine();
 				}
 			}
 		}
