@@ -1,15 +1,21 @@
 package kush.linesorter.gui;
 
 import java.io.File;
+import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -33,6 +39,7 @@ public class MainView extends GridPane {
 	private static final String TEXT_FILES = App.ALERTS.getString("TEXT_FILES");
 	
 	private static final String SORT = App.ALERTS.getString("SORT");
+	private static final String URISYNTAXEXCEPTION = App.ALERTS.getString("URISYNTAXEXCEPTION");
 	
 	private TextField inputFilePathLabel;
 	private TextField outputFilePathLabel;
@@ -79,7 +86,15 @@ public class MainView extends GridPane {
 
 		Button startBtn = new Button();
 		startBtn.setText(SORT);
-		startBtn.setOnAction(new StartBtnListener(this));
+		try {
+			startBtn.setOnAction(new StartBtnListener(this));
+		} catch (URISyntaxException e) {
+			LOGGER.severe(URISYNTAXEXCEPTION);
+			LOGGER.severe(Arrays.toString(e.getStackTrace()));
+			Alert alert = new Alert(AlertType.ERROR, URISYNTAXEXCEPTION, ButtonType.OK);
+			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+			alert.show();
+		}
 		startBtn.setPrefWidth(REMAINING);
 		add(startBtn, 0, 1);
 

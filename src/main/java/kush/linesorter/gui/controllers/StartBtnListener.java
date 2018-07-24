@@ -1,6 +1,8 @@
 package kush.linesorter.gui.controllers;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
@@ -10,6 +12,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Region;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import kush.linesorter.App;
 import kush.linesorter.SortLogic;
 import kush.linesorter.gui.MainView;
@@ -26,17 +30,16 @@ public class StartBtnListener implements EventHandler<ActionEvent> {
 
 	private static final String IOEXCEPTION_SORT = App.ALERTS.getString("IOEXCEPTION_SORT");
 	private static final String SORT_SUCCESS_TIME = App.ALERTS.getString("SORT_SUCCESS_TIME");
-	
-	//private static final MediaPlayer SUCCESS_SOUND = new MediaPlayer(new Media());
+
+	private static final MediaPlayer SUCCESS_SOUND_PLAYER = new MediaPlayer(new Media(
+			StartBtnListener.class.getClassLoader().getResource("sounds/success.mp3").toString()));
 
 	private final MainView parent;
 
-	public StartBtnListener(MainView parent) {
+	public StartBtnListener(MainView parent) throws URISyntaxException {
 		this.parent = parent;
 
-		Alert alert = new Alert(AlertType.ERROR, StartBtnListener.class.getClassLoader().getResource("sounds/success.ogg").toString(), ButtonType.OK);
-		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-		//SUCCESS_SOUND.setVolume(.15);
+		SUCCESS_SOUND_PLAYER.setVolume(.15);
 	}
 
 	public void handle(ActionEvent event) {
@@ -70,8 +73,9 @@ public class StartBtnListener implements EventHandler<ActionEvent> {
 		Alert alert = new Alert(AlertType.INFORMATION, String.format(SORT_SUCCESS_TIME,
 				parent.getOutputFile().getAbsolutePath(), (System.currentTimeMillis() - start), ButtonType.OK));
 		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+		SUCCESS_SOUND_PLAYER.stop();
+		SUCCESS_SOUND_PLAYER.play();
 		alert.show();
-		//SUCCESS_SOUND.play();
 		event.consume();
 	}
 }
