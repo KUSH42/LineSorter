@@ -26,11 +26,17 @@ public class StartBtnListener implements EventHandler<ActionEvent> {
 
 	private static final String IOEXCEPTION_SORT = App.ALERTS.getString("IOEXCEPTION_SORT");
 	private static final String SORT_SUCCESS_TIME = App.ALERTS.getString("SORT_SUCCESS_TIME");
+	
+	//private static final MediaPlayer SUCCESS_SOUND = new MediaPlayer(new Media());
 
 	private final MainView parent;
 
 	public StartBtnListener(MainView parent) {
 		this.parent = parent;
+
+		Alert alert = new Alert(AlertType.ERROR, StartBtnListener.class.getClassLoader().getResource("sounds/success.ogg").toString(), ButtonType.OK);
+		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+		//SUCCESS_SOUND.setVolume(.15);
 	}
 
 	public void handle(ActionEvent event) {
@@ -65,6 +71,7 @@ public class StartBtnListener implements EventHandler<ActionEvent> {
 				parent.getOutputFile().getAbsolutePath(), (System.currentTimeMillis() - start), ButtonType.OK));
 		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 		alert.show();
+		//SUCCESS_SOUND.play();
 		event.consume();
 	}
 }

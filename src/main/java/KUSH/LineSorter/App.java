@@ -26,32 +26,31 @@ public class App extends Application {
 	public static final ResourceBundle ALERTS = ResourceBundle.getBundle(ALERTS_BUNDLE, Locale.getDefault());
 	
 	private static final String IMAGE_NOT_FOUND = ALERTS.getString("IMAGE_NOT_FOUND");
-	
+
 	public static void main(String[] args) {
         launch(args);
     }
     
     @Override
-    public void start(Stage primaryStage) {
-    	
-    	MainView root = new MainView();
+    public void start(Stage primaryStage) {    	
+		MainView root = new MainView();
+		loadTitleIcon(primaryStage);
         primaryStage.setTitle("Line Sorter");
-        primaryStage.setScene(new Scene(root, 230, 105));
+        primaryStage.setScene(new Scene(root, 240, 115));
         primaryStage.setResizable(false);
-
-        BufferedImage titleIcon;
-        
+        primaryStage.sizeToScene();
+        primaryStage.show();
+    }
+    
+    private void loadTitleIcon(Stage primaryStage) {
 		try {
-			titleIcon = ImageIO.read(getClass().getClassLoader().getResourceAsStream("images/titleIcon.png"));
+			BufferedImage titleIcon = ImageIO.read(getClass().getClassLoader().getResourceAsStream("images/titleIcon.png"));
 			primaryStage.getIcons().add(SwingFXUtils.toFXImage(titleIcon, null));
 		} catch (IOException e) {
 			LOGGER.severe(IMAGE_NOT_FOUND + e);
 			Alert alert = new Alert(AlertType.ERROR, IMAGE_NOT_FOUND, ButtonType.OK);
 			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 			alert.show();
-			return;
 		}
-		
-        primaryStage.show();
     }
 }
