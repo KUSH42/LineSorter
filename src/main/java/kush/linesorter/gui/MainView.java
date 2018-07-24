@@ -4,12 +4,18 @@ import java.io.File;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.sun.javafx.scene.control.skin.PaginationSkin;
+import com.sun.prism.impl.paint.PaintUtil;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import kush.linesorter.App;
@@ -51,6 +57,7 @@ public class MainView {
 
 	private void initComponents() {
 		gridPane = new GridPane();
+		gridPane.setBackground(new Background(new BackgroundFill(Paint.valueOf("#D0D0D0"), null, null)));
 		gridPane.setHgap(2);
 		gridPane.setVgap(2);
 		gridPane.setPadding(new Insets(3, 3, 3, 3));
@@ -75,7 +82,7 @@ public class MainView {
 		outputFilePathLabel.setOnDragDropped(new DragDroppedOutputListener(this));
 		outputFilePathLabel.setMinSize(TextArea.USE_COMPUTED_SIZE, TextArea.USE_COMPUTED_SIZE);
 		outputFilePathLabel.setPrefSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
-		
+	
 		fileOutput = new FileChooser();
 		fileOutput.getExtensionFilters().addAll(new ExtensionFilter(TEXT_FILES, "*.txt"),
 				new ExtensionFilter(ALL_FILES, "*.*"));

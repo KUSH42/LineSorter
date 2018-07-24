@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public class SortLogic {
 
 	private static final Logger LOGGER = Logger.getLogger(SortLogic.class.getName());
-	
+
 	private SortLogic() {
 	}
 
@@ -28,7 +28,9 @@ public class SortLogic {
 			try (BufferedReader reader = new BufferedReader(new FileReader(currentFile))) {
 				line = reader.readLine();
 				while (line != null) {
-					strList.add(line);
+					if (!("").equals(line)) {
+						strList.add(line);
+					}
 					line = reader.readLine();
 				}
 			}
