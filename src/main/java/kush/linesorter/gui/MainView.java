@@ -31,14 +31,14 @@ public class MainView {
 
 	private static final String SELECT_INPUT_FILES = App.ALERTS.getString("SELECT_INPUT_FILES");
 	private static final String SELECT_OUTPUT_FILE = App.ALERTS.getString("SELECT_OUTPUT_FILE");
-	
+
 	private static final String ALL_FILES = App.ALERTS.getString("SELECT_OUTPUT_FILE");
 	private static final String TEXT_FILES = App.ALERTS.getString("TEXT_FILES");
-	
+
 	private static final String SORT = App.ALERTS.getString("SORT");
-	
+
 	private GridPane gridPane;
-	
+
 	private TextArea inputFilePathLabel;
 	private TextArea outputFilePathLabel;
 
@@ -76,11 +76,11 @@ public class MainView {
 
 		outputFilePathLabel = new TextArea(SELECT_OUTPUT_FILE);
 		outputFilePathLabel.setEditable(false);
-		outputFilePathLabel.setOnDragOver(new DragOverOutputListener(this));
+		outputFilePathLabel.setOnDragOver(new DragOverOutputListener());
 		outputFilePathLabel.setOnDragDropped(new DragDroppedOutputListener(this));
 		outputFilePathLabel.setMinSize(TextArea.USE_COMPUTED_SIZE, TextArea.USE_COMPUTED_SIZE);
 		outputFilePathLabel.setPrefSize(Integer.MAX_VALUE, Control.USE_COMPUTED_SIZE);
-		
+
 		fileOutput = new FileChooser();
 		fileOutput.getExtensionFilters().addAll(new ExtensionFilter(TEXT_FILES, "*.txt"),
 				new ExtensionFilter(ALL_FILES, "*.*"));
@@ -94,7 +94,7 @@ public class MainView {
 		startBtn.setOnAction(new StartBtnListener(this));
 		startBtn.setPrefWidth(Integer.MAX_VALUE);
 		startBtn.setMinHeight(Button.USE_PREF_SIZE);
-		
+
 		HBox inputBox = new HBox(2);
 		inputBox.getChildren().addAll(inputFilePathLabel, fileInputSelectBtn);
 		inputBox.setAlignment(Pos.BOTTOM_CENTER);

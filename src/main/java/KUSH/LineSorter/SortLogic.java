@@ -17,19 +17,22 @@ public class SortLogic {
 
 	private static final Logger LOGGER = Logger.getLogger(SortLogic.class.getName());
 
-	private SortLogic() {
-	}
-
-	public static void sort(List<File> input, File output) throws IOException {
-		long start = System.currentTimeMillis();
+	public static SortInfo sort(final List<File> input, final File output) throws IOException {
+		final long start = System.currentTimeMillis();
+		int linesProcessed = 0;
+		int linesTotal = 0;
+		int filesProcessed = 0;
 		String line;
-		ArrayList<String> strList = new ArrayList<>();
-		for (File currentFile : input) {
+		final ArrayList<String> strList = new ArrayList<>();
+		for (final File currentFile : input) {
+			filesProcessed++;
 			try (BufferedReader reader = new BufferedReader(new FileReader(currentFile))) {
 				line = reader.readLine();
 				while (line != null) {
+					linesTotal++;
 					if (!("").equals(line)) {
 						strList.add(line);
+						linesProcessed++;
 					}
 					line = reader.readLine();
 				}
@@ -44,7 +47,7 @@ public class SortLogic {
 		}
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(output))) {
 			int i = strList.size();
-			for (String str : strList) {
+			for (final String str : strList) {
 				writer.write(str);
 				if (--i > 0) {
 					writer.newLine();
@@ -52,5 +55,9 @@ public class SortLogic {
 			}
 		}
 		LOGGER.log(Level.INFO, "completed in: {0} ms", System.currentTimeMillis() - start);
+		return new SortInfo(linesProcessed, linesTotal, filesProcessed);
+	}
+
+	private SortLogic() {
 	}
 }
