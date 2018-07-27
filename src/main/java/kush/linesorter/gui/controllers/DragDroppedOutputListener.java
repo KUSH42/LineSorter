@@ -16,7 +16,7 @@ import kush.linesorter.gui.MainView;
 public class DragDroppedOutputListener implements EventHandler<DragEvent> {
 
 	private static final Logger LOGGER = Logger.getLogger(MainView.class.getName());
-	
+
 	private static final String TOO_MANY_OUTPUT_FILES_SELECTED = App.ALERTS.getString("TOO_MANY_OUTPUT_FILES_SELECTED");
 
 	private final MainView parent;
