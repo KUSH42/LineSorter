@@ -35,8 +35,8 @@ public class MainView {
 
 	private final Stage stage;
 
-	private GridPane gridPane;
 	private GridPane mainPane;
+	private GridPane gridPane;
 
 	private TextArea inputFilePathLabel;
 	private TextArea outputFilePathLabel;

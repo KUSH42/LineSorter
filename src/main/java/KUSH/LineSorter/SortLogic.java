@@ -23,6 +23,7 @@ public class SortLogic {
 		int linesTotal = 0;
 		int filesProcessed = 0;
 		String line;
+
 		final ArrayList<String> strList = new ArrayList<>();
 		for (final File currentFile : input) {
 			filesProcessed++;
