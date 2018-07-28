@@ -5,17 +5,13 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 import kush.linesorter.App;
 import kush.linesorter.gui.controllers.DragDroppedInputListener;
 import kush.linesorter.gui.controllers.DragDroppedOutputListener;
@@ -37,96 +33,28 @@ public class MainView {
 
 	private static final String SORT = App.ALERTS.getString("SORT");
 
+	private final Stage stage;
+
 	private GridPane gridPane;
+	private GridPane mainPane;
 
 	private TextArea inputFilePathLabel;
 	private TextArea outputFilePathLabel;
 
-	private List<File> inputFiles;
-	private File outputFile;
+	private TitleBar titleBar;
+	private Button startBtn;
 
+	private List<File> inputFiles;
+
+	private File outputFile;
 	private FileChooser fileInput;
+
 	private FileChooser fileOutput;
 
-	public MainView() {
+	public MainView(final Stage stage) {
+		this.stage = stage;
 		initComponents();
 		LOGGER.fine("MainView initialized");
-	}
-
-	private void initComponents() {
-		gridPane = new GridPane();
-		gridPane.setBackground(new Background(new BackgroundFill(Paint.valueOf("#D0D0D0"), null, null)));
-		gridPane.setHgap(2);
-		gridPane.setVgap(2);
-		gridPane.setPadding(new Insets(3, 3, 3, 3));
-
-		inputFilePathLabel = new TextArea(SELECT_INPUT_FILES);
-		inputFilePathLabel.setEditable(false);
-		inputFilePathLabel.setOnDragOver(new DragOverInputListener());
-		inputFilePathLabel.setOnDragDropped(new DragDroppedInputListener(this));
-		inputFilePathLabel.setMinSize(TextArea.USE_COMPUTED_SIZE, TextArea.USE_COMPUTED_SIZE);
-		inputFilePathLabel.setPrefSize(Integer.MAX_VALUE, Control.USE_COMPUTED_SIZE);
-
-		fileInput = new FileChooser();
-		fileInput.getExtensionFilters().add(new ExtensionFilter(TEXT_FILES, "*.txt"));
-		Button fileInputSelectBtn = new Button();
-		fileInputSelectBtn.setText("...");
-		fileInputSelectBtn.setPrefHeight(Integer.MAX_VALUE);
-		fileInputSelectBtn.setOnAction(new FileSelectInputBtnListener(this));
-
-		outputFilePathLabel = new TextArea(SELECT_OUTPUT_FILE);
-		outputFilePathLabel.setEditable(false);
-		outputFilePathLabel.setOnDragOver(new DragOverOutputListener());
-		outputFilePathLabel.setOnDragDropped(new DragDroppedOutputListener(this));
-		outputFilePathLabel.setMinSize(TextArea.USE_COMPUTED_SIZE, TextArea.USE_COMPUTED_SIZE);
-		outputFilePathLabel.setPrefSize(Integer.MAX_VALUE, Control.USE_COMPUTED_SIZE);
-
-		fileOutput = new FileChooser();
-		fileOutput.getExtensionFilters().addAll(new ExtensionFilter(TEXT_FILES, "*.txt"),
-				new ExtensionFilter(ALL_FILES, "*.*"));
-		Button fileOutputSelectBtn = new Button();
-		fileOutputSelectBtn.setText("...");
-		fileOutputSelectBtn.setPrefHeight(Integer.MAX_VALUE);
-		fileOutputSelectBtn.setOnAction(new FileSelectOutputBtnListener(this));
-
-		Button startBtn = new Button();
-		startBtn.setText(SORT);
-		startBtn.setOnAction(new StartBtnListener(this));
-		startBtn.setPrefWidth(Integer.MAX_VALUE);
-		startBtn.setMinHeight(Button.USE_PREF_SIZE);
-
-		HBox inputBox = new HBox(2);
-		inputBox.getChildren().addAll(inputFilePathLabel, fileInputSelectBtn);
-		inputBox.setAlignment(Pos.BOTTOM_CENTER);
-		HBox outputBox = new HBox(2);
-		outputBox.getChildren().addAll(outputFilePathLabel, fileOutputSelectBtn);
-		outputBox.setAlignment(Pos.BOTTOM_RIGHT);
-
-		gridPane.addColumn(0, inputBox, outputBox, startBtn);
-	}
-
-	public List<File> getInputFiles() {
-		return inputFiles;
-	}
-
-	public void setInputFiles(List<File> inputFiles) {
-		this.inputFiles = inputFiles;
-	}
-
-	public TextArea getInputFilePathLabel() {
-		return inputFilePathLabel;
-	}
-
-	public TextArea getOutputFilePathLabel() {
-		return outputFilePathLabel;
-	}
-
-	public File getOutputFile() {
-		return outputFile;
-	}
-
-	public void setOutputFile(File outputFile) {
-		this.outputFile = outputFile;
 	}
 
 	public FileChooser getFileInput() {
@@ -139,5 +67,102 @@ public class MainView {
 
 	public GridPane getGridPane() {
 		return gridPane;
+	}
+
+	public TextArea getInputFilePathLabel() {
+		return inputFilePathLabel;
+	}
+
+	public List<File> getInputFiles() {
+		return inputFiles;
+	}
+
+	public GridPane getMainPane() {
+		return mainPane;
+	}
+
+	public File getOutputFile() {
+		return outputFile;
+	}
+
+	public TextArea getOutputFilePathLabel() {
+		return outputFilePathLabel;
+	}
+
+	public Button getStartBtn() {
+		return startBtn;
+	}
+
+	public TitleBar getTitleBar() {
+		return titleBar;
+	}
+
+	private void initComponents() {
+
+		// title-bar
+		setTitleBar(new TitleBar(stage));
+
+		// input
+		inputFilePathLabel = new TextArea(SELECT_INPUT_FILES);
+		inputFilePathLabel.setEditable(false);
+		inputFilePathLabel.setOnDragOver(new DragOverInputListener());
+		inputFilePathLabel.setOnDragDropped(new DragDroppedInputListener(this));
+		inputFilePathLabel.setPrefSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
+
+		fileInput = new FileChooser();
+		fileInput.getExtensionFilters().add(new ExtensionFilter(TEXT_FILES, "*.txt"));
+		final Button fileInputSelectBtn = new Button();
+		fileInputSelectBtn.setText("...");
+		fileInputSelectBtn.setPrefHeight(Integer.MAX_VALUE);
+		fileInputSelectBtn.setOnAction(new FileSelectInputBtnListener(this));
+
+		final HBox inputBox = new HBox(2);
+		inputBox.getChildren().addAll(inputFilePathLabel, fileInputSelectBtn);
+
+		// output
+		outputFilePathLabel = new TextArea(SELECT_OUTPUT_FILE);
+		outputFilePathLabel.setEditable(false);
+		outputFilePathLabel.setOnDragOver(new DragOverOutputListener());
+		outputFilePathLabel.setOnDragDropped(new DragDroppedOutputListener(this));
+		outputFilePathLabel.setPrefSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
+
+		fileOutput = new FileChooser();
+		fileOutput.getExtensionFilters().addAll(new ExtensionFilter(TEXT_FILES, "*.txt"),
+				new ExtensionFilter(ALL_FILES, "*.*"));
+		final Button fileOutputSelectBtn = new Button();
+		fileOutputSelectBtn.setText("...");
+		fileOutputSelectBtn.setPrefHeight(Integer.MAX_VALUE);
+		fileOutputSelectBtn.setOnAction(new FileSelectOutputBtnListener(this));
+
+		final HBox outputBox = new HBox(2);
+		outputBox.getChildren().addAll(outputFilePathLabel, fileOutputSelectBtn);
+
+		// sort button
+		startBtn = new Button();
+		startBtn.setText(SORT);
+		startBtn.setOnAction(new StartBtnListener(this));
+		startBtn.setPrefWidth(Integer.MAX_VALUE);
+
+		// container panels
+		gridPane = new GridPane();
+		gridPane.setHgap(2);
+		gridPane.setVgap(2);
+		gridPane.setPadding(new Insets(3, 3, 3, 3));
+		gridPane.addColumn(0, inputBox, outputBox, startBtn);
+
+		mainPane = new GridPane();
+		mainPane.addColumn(0, titleBar.getTitleBarPane(), gridPane);
+	}
+
+	public void setInputFiles(final List<File> inputFiles) {
+		this.inputFiles = inputFiles;
+	}
+
+	public void setOutputFile(final File outputFile) {
+		this.outputFile = outputFile;
+	}
+
+	public void setTitleBar(final TitleBar titleBar) {
+		this.titleBar = titleBar;
 	}
 }

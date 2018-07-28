@@ -1,0 +1,46 @@
+.main-view {
+	-fx-border-radius: 35 10 10 10;
+	-fx-background-radius: 35 10 10 10;
+}
+
+.main-view-button {
+	-fx-border-radius: 10 10 10 10;
+	-fx-background-radius: 10 10 10 10;
+}
+
+.title-min-button{
+	-fx-border-radius: 0 0 0 10;
+	-fx-background-radius: 0 0 0 10;
+	-fx-border-color:#AAAAAA;
+	-fx-text-decoration:none;
+	-fx-border-width:1px;
+}
+
+.title-min-button:hover{
+	-fx-effect: dropshadow( gaussian , rgba(100,100,100,0.3) , 0, 0,-1,-1);
+}
+
+.title-max-button{
+	-fx-border-radius: 0 0 0 0;
+	-fx-background-radius:  0 0 0 0;
+	-fx-border-color:#AAAAAA;
+	-fx-border-width:1px;
+}
+
+.title-max-button:hover{
+	-fx-effect: dropshadow( gaussian , rgba(100,100,100,0.3) , 0, 0,-1,-1);
+}
+
+.title-close-button{
+	-fx-text-fill: rgb(220,220,220); 
+	-fx-background-color:linear-gradient(#EF1111, #450001);
+	-fx-border-radius: 0 10 0 0;
+	-fx-background-radius: 0 10 0 0;
+	-fx-border-width:1px;
+	-fx-border-color:#a04a3a;
+}
+
+.title-close-button:hover{
+	-fx-background-color:linear-gradient(from 0% 0% to 100% 100%, #750404, #E40808);
+	-fx-text-fill: rgb(245,245,245); 
+}
