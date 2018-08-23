@@ -4,7 +4,6 @@ import java.io.File;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.stage.Stage;
 import kush.linesorter.gui.MainView;
 
 public class FileSelectOutputBtnListener implements EventHandler<ActionEvent> {
@@ -17,7 +16,7 @@ public class FileSelectOutputBtnListener implements EventHandler<ActionEvent> {
 
 	@Override
 	public void handle(ActionEvent event) {
-		File selectedFile = parent.getFileOutput().showSaveDialog((Stage) parent.getGridPane().getScene().getWindow());
+		File selectedFile = parent.getFileOutput().showSaveDialog(parent.getGridPane().getScene().getWindow());
 		if (selectedFile != null) {
 			parent.setOutputFile(selectedFile);
 			parent.getOutputFilePathLabel().setText(selectedFile.getAbsolutePath());

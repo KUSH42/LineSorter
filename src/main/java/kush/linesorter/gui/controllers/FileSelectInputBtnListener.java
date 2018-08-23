@@ -5,7 +5,6 @@ import java.util.List;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.stage.Stage;
 import kush.linesorter.gui.MainView;
 
 public class FileSelectInputBtnListener implements EventHandler<ActionEvent> {
@@ -19,7 +18,7 @@ public class FileSelectInputBtnListener implements EventHandler<ActionEvent> {
 	@Override
 	public void handle(ActionEvent event) {
 		List<File> selectedFiles = parent.getFileInput()
-				.showOpenMultipleDialog((Stage) parent.getGridPane().getScene().getWindow());
+				.showOpenMultipleDialog(parent.getGridPane().getScene().getWindow());
 		if (selectedFiles != null && !selectedFiles.isEmpty()) {
 			parent.setInputFiles(selectedFiles);
 			StringBuilder filepaths = new StringBuilder();

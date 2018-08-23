@@ -37,18 +37,19 @@ public class MainView {
 
 	private GridPane mainPane;
 	private GridPane gridPane;
+	private GridPane shadowPane;
 
 	private TextArea inputFilePathLabel;
+
 	private TextArea outputFilePathLabel;
-
 	private TitleBar titleBar;
-	private Button startBtn;
 
+	private Button startBtn;
 	private List<File> inputFiles;
 
 	private File outputFile;
-	private FileChooser fileInput;
 
+	private FileChooser fileInput;
 	private FileChooser fileOutput;
 
 	public MainView(final Stage stage) {
@@ -89,6 +90,10 @@ public class MainView {
 		return outputFilePathLabel;
 	}
 
+	public GridPane getShadowPane() {
+		return shadowPane;
+	}
+
 	public Stage getStage() {
 		return stage;
 	}
@@ -114,9 +119,6 @@ public class MainView {
 	}
 
 	private void initComponents() {
-
-		// title-bar
-		setTitleBar(new TitleBar(stage));
 
 		// input
 		inputFilePathLabel = new TextArea(SELECT_INPUT_FILES);
@@ -165,11 +167,18 @@ public class MainView {
 		gridPane = new GridPane();
 		gridPane.setHgap(2);
 		gridPane.setVgap(2);
-		gridPane.setPadding(new Insets(3, 3, 3, 3));
+		gridPane.setPadding(new Insets(3));
 		gridPane.addColumn(0, inputBox, outputBox, startBtn);
 
+		shadowPane = new GridPane();
+
 		mainPane = new GridPane();
-		mainPane.addColumn(0, titleBar.getTitleBarPane(), gridPane);
-		mainPane.setStyle("-fx-effect: innershadow(gaussian, #929292, 1, 3, 0, 0);");
+		mainPane.setPadding(new Insets(12));
+
+		// title-bar
+		setTitleBar(new TitleBar(stage, this));
+
+		shadowPane.addColumn(0, titleBar.getTitleBarPane(), gridPane);
+		mainPane.addColumn(0, shadowPane);
 	}
 }

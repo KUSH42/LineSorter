@@ -8,15 +8,43 @@
 	-fx-background-radius: 10 10 10 10;
 }
 
+.shadowpane{
+	-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 12, 0.5, 0.0, 0.0);
+	-fx-background-color: rgba(255, 255, 255, 0.9);
+}
+
+.mainpane{
+	-fx-background-color: rgba(0, 0, 0, 0);
+}
+
 .title-min-button{
 	-fx-border-radius: 0 0 0 10;
 	-fx-background-radius: 0 0 0 10;
+}
 
+.title-min-button:focused{
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius:  0 0 0 10;
+    -fx-padding: 4 8 4 8;
+    -fx-text-fill: -fx-text-base-color;
+    -fx-alignment: CENTER;
+    -fx-content-display: LEFT;
 }
 
 .title-max-button{
 	-fx-border-radius: 0 0 0 0;
 	-fx-background-radius:  0 0 0 0;
+}
+
+.title-max-button:focused{
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 0 0 0 0;
+    -fx-padding: 4 8 4 8;
+    -fx-text-fill: -fx-text-base-color;
+    -fx-alignment: CENTER;
+    -fx-content-display: LEFT;
 }
 
 .title-close-button{
@@ -26,7 +54,8 @@
 	-fx-background-radius: 0 10 0 0;
 	-fx-border-width:0px 1px 0px 1px;
 	-fx-border-color:#a04a3a;
-	-fx-effect: dropshadow( gaussian , rgba(100,100,100,0.3) , 0, 0,-1,-1);
+	-fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-padding: 4 8 4 8;
 }
 
 .title-close-button:hover{

@@ -38,7 +38,7 @@ public class TitleBar {
 	private double posX;
 	private double posY;
 
-	public TitleBar(final Stage stage) {
+	public TitleBar(final Stage stage, final MainView mainView) {
 
 		this.stage = stage;
 
@@ -59,10 +59,12 @@ public class TitleBar {
 				LOGGER.log(Level.FINE, "Window maximized: {0}", value);
 				getStage().setMaximized(true);
 				getTitleMax().setText("☒");
+				mainView.getMainPane().setPadding(new Insets(0));
 			} else {
 				LOGGER.log(Level.FINE, "Window restored: {0}", value);
 				getStage().setMaximized(false);
 				getTitleMax().setText("☐");
+				mainView.getMainPane().setPadding(new Insets(12));
 			}
 		});
 		titleClose = new Button("✖");
