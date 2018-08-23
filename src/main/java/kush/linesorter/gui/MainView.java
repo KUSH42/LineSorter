@@ -108,6 +108,8 @@ public class MainView {
 		inputFilePathLabel.setOnDragOver(new DragOverInputListener());
 		inputFilePathLabel.setOnDragDropped(new DragDroppedInputListener(this));
 		inputFilePathLabel.setPrefSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
+		inputFilePathLabel.setStyle("-fx-border-radius: 10 0 0 0;");
+		inputFilePathLabel.setStyle("-fx-background-radius: 10 0 0 0;");
 
 		fileInput = new FileChooser();
 		fileInput.getExtensionFilters().add(new ExtensionFilter(TEXT_FILES, "*.txt"));
@@ -152,6 +154,7 @@ public class MainView {
 
 		mainPane = new GridPane();
 		mainPane.addColumn(0, titleBar.getTitleBarPane(), gridPane);
+		mainPane.setStyle("-fx-effect: innershadow(gaussian, #929292, 1, 3, 0, 0);");
 	}
 
 	public void setInputFiles(final List<File> inputFiles) {
