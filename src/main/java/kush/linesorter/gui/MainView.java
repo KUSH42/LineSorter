@@ -89,6 +89,10 @@ public class MainView {
 		return outputFilePathLabel;
 	}
 
+	public Stage getStage() {
+		return stage;
+	}
+
 	public Button getStartBtn() {
 		return startBtn;
 	}
