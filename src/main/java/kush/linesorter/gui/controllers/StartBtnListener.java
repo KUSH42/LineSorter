@@ -34,47 +34,52 @@ public class StartBtnListener implements EventHandler<ActionEvent> {
 
 	private final MainView parent;
 
-	public StartBtnListener(MainView parent) {
+	public StartBtnListener(final MainView parent) {
 		this.parent = parent;
 
 		SUCCESS_SOUND_PLAYER.setVolume(.15);
 	}
 
-	public void handle(ActionEvent event) {
-		long start = System.currentTimeMillis();
+	@Override
+	public void handle(final ActionEvent event) {
+		final long start = System.currentTimeMillis();
 
 		SortInfo info;
 
 		if (parent.getInputFiles() == null || parent.getInputFiles().isEmpty()) {
 			LOGGER.info(NO_INPUT_FILE_SELECTED);
-			Alert alert = new Alert(AlertType.WARNING, PLEASE_SELECT_INPUT, ButtonType.OK);
+			final Alert alert = new Alert(AlertType.WARNING, PLEASE_SELECT_INPUT, ButtonType.OK);
+			alert.initOwner(parent.getStage());
 			alert.show();
 			return;
 		}
 		if (parent.getOutputFile() == null) {
 			LOGGER.info(NO_OUTPUT_FILE_SELECTED);
-			Alert alert = new Alert(AlertType.WARNING, PLEASE_SELECT_OUTPUT, ButtonType.OK);
+			final Alert alert = new Alert(AlertType.WARNING, PLEASE_SELECT_OUTPUT, ButtonType.OK);
+			alert.initOwner(parent.getStage());
 			alert.show();
 			return;
 		}
 
 		try {
 			info = SortLogic.sort(parent.getInputFiles(), parent.getOutputFile());
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			LOGGER.severe(IOEXCEPTION_SORT);
 			LOGGER.severe(Arrays.toString(e.getStackTrace()));
-			Alert alert = new Alert(AlertType.ERROR, IOEXCEPTION_SORT, ButtonType.OK);
+			final Alert alert = new Alert(AlertType.ERROR, IOEXCEPTION_SORT, ButtonType.OK);
+			alert.initOwner(parent.getStage());
 			alert.show();
 			return;
 		}
-		Alert alert = new Alert(AlertType.INFORMATION,
+		final Alert alert = new Alert(AlertType.INFORMATION,
 				String.format(SORT_SUCCESS_TIME, parent.getOutputFile().getAbsolutePath(),
 						(System.currentTimeMillis() - start), info.numberFiles, info.linesTotal,
 						info.linesTotal - info.linesProcessed, info.linesProcessed),
 				ButtonType.OK);
+		alert.initOwner(parent.getStage());
+		alert.show();
 		SUCCESS_SOUND_PLAYER.stop();
 		SUCCESS_SOUND_PLAYER.play();
-		alert.show();
 		event.consume();
 	}
 }

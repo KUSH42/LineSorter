@@ -26,12 +26,13 @@ public class DragDroppedOutputListener implements EventHandler<DragEvent> {
 	}
 
 	@Override
-	public void handle(DragEvent event) {
-		Dragboard db = event.getDragboard();
-		List<File> selectedFiles = db.getFiles();
+	public void handle(final DragEvent event) {
+		final Dragboard db = event.getDragboard();
+		final List<File> selectedFiles = db.getFiles();
 		if (selectedFiles.size() > 1) {
 			LOGGER.info(TOO_MANY_OUTPUT_FILES_SELECTED);
-			Alert alert = new Alert(AlertType.WARNING, TOO_MANY_OUTPUT_FILES_SELECTED, ButtonType.OK);
+			final Alert alert = new Alert(AlertType.WARNING, TOO_MANY_OUTPUT_FILES_SELECTED, ButtonType.OK);
+			alert.initOwner(parent.getStage());
 			alert.show();
 			return;
 		}
