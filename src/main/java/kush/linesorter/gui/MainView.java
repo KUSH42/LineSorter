@@ -101,6 +101,18 @@ public class MainView {
 		return titleBar;
 	}
 
+	public void setInputFiles(final List<File> inputFiles) {
+		this.inputFiles = inputFiles;
+	}
+
+	public void setOutputFile(final File outputFile) {
+		this.outputFile = outputFile;
+	}
+
+	public void setTitleBar(final TitleBar titleBar) {
+		this.titleBar = titleBar;
+	}
+
 	private void initComponents() {
 
 		// title-bar
@@ -159,17 +171,5 @@ public class MainView {
 		mainPane = new GridPane();
 		mainPane.addColumn(0, titleBar.getTitleBarPane(), gridPane);
 		mainPane.setStyle("-fx-effect: innershadow(gaussian, #929292, 1, 3, 0, 0);");
-	}
-
-	public void setInputFiles(final List<File> inputFiles) {
-		this.inputFiles = inputFiles;
-	}
-
-	public void setOutputFile(final File outputFile) {
-		this.outputFile = outputFile;
-	}
-
-	public void setTitleBar(final TitleBar titleBar) {
-		this.titleBar = titleBar;
 	}
 }
