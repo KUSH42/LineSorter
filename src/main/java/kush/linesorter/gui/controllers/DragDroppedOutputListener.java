@@ -38,7 +38,7 @@ public class DragDroppedOutputListener implements EventHandler<DragEvent> {
 		}
 		if (!selectedFiles.isEmpty()) {
 			parent.setOutputFile(selectedFiles.get(0));
-			parent.getOutputFilePathLabel().setText(selectedFiles.get(0).getName());
+			parent.getOutputFilePathLabel().setText(selectedFiles.get(0).getAbsolutePath());
 		}
 		event.consume();
 	}
