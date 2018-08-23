@@ -7,14 +7,22 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
 public class OptionsDialogListener implements EventHandler<KeyEvent> {
 
-	final KeyCombination keyComb = new KeyCodeCombination(KeyCode.P, KeyCombination.CONTROL_ANY);
+	private static final KeyCombination keyComb = new KeyCodeCombination(KeyCode.P, KeyCombination.CONTROL_ANY);
+	private final Stage stage;
 
-	public void handle(KeyEvent event) {
+	public OptionsDialogListener(final Stage stage) {
+		this.stage = stage;
+	}
+
+	@Override
+	public void handle(final KeyEvent event) {
 		if (keyComb.match(event)) {
-			Alert alert = new Alert(Alert.AlertType.INFORMATION, "Works!", ButtonType.OK);
+			final Alert alert = new Alert(Alert.AlertType.INFORMATION, "Works!", ButtonType.OK);
+			alert.initOwner(stage);
 			alert.show();
 			event.consume();
 		}

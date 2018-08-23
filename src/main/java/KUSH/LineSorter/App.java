@@ -45,6 +45,7 @@ public class App extends Application {
 		} catch (final IOException e) {
 			LOGGER.severe(IMAGE_NOT_FOUND + e);
 			final Alert alert = new Alert(AlertType.ERROR, IMAGE_NOT_FOUND, ButtonType.OK);
+			alert.initOwner(primaryStage);
 			alert.show();
 		}
 	}
@@ -56,7 +57,7 @@ public class App extends Application {
 		primaryStage.setTitle("Line Sorter");
 
 		final Scene scene = new Scene(root.getMainPane(), 280, 140);
-		scene.addEventFilter(KeyEvent.KEY_PRESSED, new OptionsDialogListener());
+		scene.addEventFilter(KeyEvent.KEY_PRESSED, new OptionsDialogListener(primaryStage));
 
 		primaryStage.initStyle(StageStyle.TRANSPARENT);
 		scene.setFill(Color.TRANSPARENT);
