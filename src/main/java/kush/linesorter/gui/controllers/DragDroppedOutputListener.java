@@ -10,14 +10,13 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
-import javafx.scene.layout.Region;
 import kush.linesorter.App;
 import kush.linesorter.gui.MainView;
 
 public class DragDroppedOutputListener implements EventHandler<DragEvent> {
 
 	private static final Logger LOGGER = Logger.getLogger(MainView.class.getName());
-	
+
 	private static final String TOO_MANY_OUTPUT_FILES_SELECTED = App.ALERTS.getString("TOO_MANY_OUTPUT_FILES_SELECTED");
 
 	private final MainView parent;
@@ -33,7 +32,6 @@ public class DragDroppedOutputListener implements EventHandler<DragEvent> {
 		if (selectedFiles.size() > 1) {
 			LOGGER.info(TOO_MANY_OUTPUT_FILES_SELECTED);
 			Alert alert = new Alert(AlertType.WARNING, TOO_MANY_OUTPUT_FILES_SELECTED, ButtonType.OK);
-			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 			alert.show();
 			return;
 		}

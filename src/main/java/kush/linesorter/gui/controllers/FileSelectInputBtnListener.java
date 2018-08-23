@@ -18,7 +18,8 @@ public class FileSelectInputBtnListener implements EventHandler<ActionEvent> {
 
 	@Override
 	public void handle(ActionEvent event) {
-		List<File> selectedFiles = parent.getFileInput().showOpenMultipleDialog((Stage) parent.getScene().getWindow());
+		List<File> selectedFiles = parent.getFileInput()
+				.showOpenMultipleDialog((Stage) parent.getGridPane().getScene().getWindow());
 		if (selectedFiles != null && !selectedFiles.isEmpty()) {
 			parent.setInputFiles(selectedFiles);
 			StringBuilder filepaths = new StringBuilder();

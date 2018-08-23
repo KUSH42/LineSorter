@@ -3,9 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>KUSH</groupId>
-	<artifactId>LineSorter</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<groupId>kush</groupId>
+	<artifactId>linesorter</artifactId>
+	<version>0.1</version>
 	<packaging>jar</packaging>
 
 	<name>LineSorter</name>
@@ -35,11 +35,20 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<!-- Build an executable JAR -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<finalName>${project.name}-v${project.version}</finalName>
+					<archive>
+						<manifest>
+							<mainClass>kush.linesorter.App</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
 		</plugins>
-		<resources>
-			<resource>
-				<directory>/src/main/resources</directory>
-			</resource>
-		</resources>
 	</build>
 </project>
