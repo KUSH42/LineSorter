@@ -27,6 +27,10 @@ public class ResizeHelper {
 
 		@Override
 		public void handle(final MouseEvent mouseEvent) {
+			if (stage.isFullScreen() || stage.isMaximized()) {
+				return;
+			}
+
 			final EventType<? extends MouseEvent> mouseEventType = mouseEvent.getEventType();
 			final Scene scene = stage.getScene();
 
