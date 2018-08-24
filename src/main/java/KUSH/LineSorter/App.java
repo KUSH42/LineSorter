@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import kush.linesorter.gui.MainView;
 import kush.linesorter.gui.controllers.OptionsDialogListener;
+import kush.linesorter.gui.controllers.ResizeHelper;
 
 public class App extends Application {
 
@@ -47,6 +48,7 @@ public class App extends Application {
 
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		ResizeHelper.addResizeListener(primaryStage);
 		primaryStage.setMinHeight(
 				primaryStage.getHeight() + root.getGridPane().getVgap() * root.getGridPane().getChildren().size() - 1
 						+ root.getMainPane().getHeight());
