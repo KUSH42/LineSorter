@@ -163,6 +163,9 @@ public class MainView {
 		startBtn.setOnAction(new StartBtnListener(this));
 		startBtn.setPrefWidth(Integer.MAX_VALUE);
 
+		// title-bar
+		setTitleBar(new TitleBar(stage, this));
+
 		// container panels
 		gridPane = new GridPane();
 		gridPane.setHgap(2);
@@ -171,14 +174,9 @@ public class MainView {
 		gridPane.addColumn(0, inputBox, outputBox, startBtn);
 
 		shadowPane = new GridPane();
-
+		shadowPane.addColumn(0, titleBar.getTitleBarPane(), gridPane);
 		mainPane = new GridPane();
 		mainPane.setPadding(new Insets(12));
-
-		// title-bar
-		setTitleBar(new TitleBar(stage, this));
-
-		shadowPane.addColumn(0, titleBar.getTitleBarPane(), gridPane);
 		mainPane.addColumn(0, shadowPane);
 	}
 }
